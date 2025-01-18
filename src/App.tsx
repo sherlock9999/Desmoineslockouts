@@ -187,7 +187,7 @@ function App() {
               <img 
                 src="/logo.png" 
                 alt="Emergency Vehicle Services Logo" 
-                className="w-20 h-20 sm:w-24 sm:h-24 relative z-10 rounded-full p-1 shadow-xl"
+                className="relative rounded-full z-10 p-1 shadow-xl"
               />
             </div>
             <div className="text-center sm:text-left">
@@ -211,9 +211,6 @@ function App() {
             </a>
           </div>
         </div>
-        {/* Add decorative elements */}
-        <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-blue-500/20 to-transparent"></div>
-        <div className="absolute bottom-0 left-0 w-1/2 h-1/2 bg-gradient-to-t from-blue-900/30 to-transparent"></div>
       </header>
 
       {/* Services Section */}
