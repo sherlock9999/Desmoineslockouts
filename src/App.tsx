@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Phone, Clock, Car, Key, Battery, MapPin, Mail, Send, Globe } from 'lucide-react';
 import { Helmet } from 'react-helmet';
+import toast, { Toaster } from 'react-hot-toast';
 
 interface ServiceRequest {
   name: string;
@@ -111,8 +112,45 @@ function App() {
     setLanguage(language === 'en' ? 'es' : 'en');
   };
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    try {
+      const form = e.target as HTMLFormElement;
+      
+      // Encode form data properly for Netlify
+      const formData = new FormData(form);
+      fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams(formData as any).toString(),
+      })
+        .then(() => {
+          toast.success(t.thankYou);
+          // Reset form
+          setFormData({
+            name: '',
+            phone: '',
+            service: 'lockout',
+            carDetails: '',
+            location: '',
+            description: ''
+          });
+          form.reset();
+        })
+        .catch((error) => {
+          console.error('Form submission error:', error);
+          toast.error('Error submitting form. Please try again.');
+        });
+    } catch (error) {
+      console.error('Form submission error:', error);
+      toast.error('Error submitting form. Please try again.');
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
+      <Toaster position="top-center" />
       <Helmet>
         <title>24/7 Emergency Vehicle Services Des Moines | Lockout & Jump Start</title>
         <meta name="description" content="Professional 24/7 emergency vehicle services in Des Moines. Fast & reliable lockout assistance and jump start services. Call now for immediate help!" />
@@ -125,7 +163,7 @@ function App() {
         <meta property="og:locale" content={language === 'en' ? 'en_US' : 'es_ES'} />
         
         {/* Canonical URL */}
-        <link rel="canonical" href="https://yourwebsite.com" />
+        <link rel="canonical" href="https://desmoineslockouts.com" />
       </Helmet>
 
       {/* Language Toggle */}
@@ -232,22 +270,15 @@ function App() {
       <section className="py-8 sm:py-16 container mx-auto px-4">
         <h2 className="text-2xl sm:text-3xl font-bold text-center mb-8 sm:mb-12">{t.requestService}</h2>
         <form 
+          onSubmit={handleSubmit}
           className="max-w-2xl mx-auto bg-white p-4 sm:p-8 rounded-lg shadow-lg"
           name="service-request"
           method="POST"
           data-netlify="true"
           netlify-honeypot="bot-field"
         >
-          {/* Hidden input for Netlify form name */}
-          <input type="hidden" name="form-name" value="service-request" />
+          <input type="hidden" name="service-request-form" value="service-request" />
           
-          {/* Honeypot field to prevent spam */}
-          <p className="hidden">
-            <label>
-              Don't fill this out if you're human: <input name="bot-field" />
-            </label>
-          </p>
-
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1 sm:mb-2">{t.name}</label>
