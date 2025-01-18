@@ -232,7 +232,6 @@ function App() {
       <section className="py-8 sm:py-16 container mx-auto px-4">
         <h2 className="text-2xl sm:text-3xl font-bold text-center mb-8 sm:mb-12">{t.requestService}</h2>
         <form 
-          onSubmit={handleSubmit} 
           className="max-w-2xl mx-auto bg-white p-4 sm:p-8 rounded-lg shadow-lg"
           name="service-request"
           method="POST"
