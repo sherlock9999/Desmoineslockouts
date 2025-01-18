@@ -182,7 +182,7 @@ function App() {
       <header className="bg-gradient-to-r from-blue-600 to-blue-800 text-white relative overflow-hidden">
         <div className="container mx-auto px-4 py-8 sm:py-16">
           <div className="flex flex-col sm:flex-row items-center gap-6 sm:gap-8 mb-8">
-            <div className="relative">
+            <div className="relative sm:hidden">
               <div className="absolute inset-0 bg-white/10 backdrop-blur-sm rounded-full"></div>
               <img 
                 src="/logo.png" 
