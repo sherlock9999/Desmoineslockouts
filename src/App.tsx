@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Phone, Clock, Car, Key, Battery, MapPin, Mail, Send, Globe } from 'lucide-react';
+import { Helmet } from 'react-helmet';
 
 interface ServiceRequest {
   name: string;
@@ -106,30 +107,27 @@ function App() {
     description: ''
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    // Create mailto link with form data
-    const subject = encodeURIComponent(`New Service Request - ${formData.service}`);
-    const body = encodeURIComponent(`
-Name: ${formData.name}
-Phone: ${formData.phone}
-Service: ${formData.service}
-Vehicle: ${formData.carDetails}
-Location: ${formData.location}
-Description: ${formData.description}
-    `);
-    
-    window.location.href = `mailto:support@desmoines.com?subject=${subject}&body=${body}`;
-    alert(t.thankYou);
-  };
-
   const toggleLanguage = () => {
     setLanguage(language === 'en' ? 'es' : 'en');
   };
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <Helmet>
+        <title>24/7 Emergency Vehicle Services Des Moines | Lockout & Jump Start</title>
+        <meta name="description" content="Professional 24/7 emergency vehicle services in Des Moines. Fast & reliable lockout assistance and jump start services. Call now for immediate help!" />
+        <meta name="keywords" content="car lockout, jump start, emergency vehicle service, Des Moines, 24/7 service, vehicle locksmith" />
+        
+        {/* Open Graph tags for social sharing */}
+        <meta property="og:title" content="24/7 Emergency Vehicle Services Des Moines" />
+        <meta property="og:description" content="Professional 24/7 emergency vehicle services in Des Moines. Fast & reliable lockout assistance and jump start services." />
+        <meta property="og:type" content="website" />
+        <meta property="og:locale" content={language === 'en' ? 'en_US' : 'es_ES'} />
+        
+        {/* Canonical URL */}
+        <link rel="canonical" href="https://yourwebsite.com" />
+      </Helmet>
+
       {/* Language Toggle */}
       <div className="fixed top-2 right-2 z-50 sm:top-4 sm:right-4">
         <button
@@ -233,12 +231,30 @@ Description: ${formData.description}
       {/* Service Request Form */}
       <section className="py-8 sm:py-16 container mx-auto px-4">
         <h2 className="text-2xl sm:text-3xl font-bold text-center mb-8 sm:mb-12">{t.requestService}</h2>
-        <form onSubmit={handleSubmit} className="max-w-2xl mx-auto bg-white p-4 sm:p-8 rounded-lg shadow-lg">
+        <form 
+          onSubmit={handleSubmit} 
+          className="max-w-2xl mx-auto bg-white p-4 sm:p-8 rounded-lg shadow-lg"
+          name="service-request"
+          method="POST"
+          data-netlify="true"
+          netlify-honeypot="bot-field"
+        >
+          {/* Hidden input for Netlify form name */}
+          <input type="hidden" name="form-name" value="service-request" />
+          
+          {/* Honeypot field to prevent spam */}
+          <p className="hidden">
+            <label>
+              Don't fill this out if you're human: <input name="bot-field" />
+            </label>
+          </p>
+
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1 sm:mb-2">{t.name}</label>
               <input
                 type="text"
+                name="name"
                 required
                 className="w-full px-3 sm:px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
                 value={formData.name}
@@ -249,6 +265,7 @@ Description: ${formData.description}
               <label className="block text-sm font-medium text-gray-700 mb-1 sm:mb-2">{t.phone}</label>
               <input
                 type="tel"
+                name="phone"
                 required
                 className="w-full px-3 sm:px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
                 value={formData.phone}
@@ -258,6 +275,7 @@ Description: ${formData.description}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1 sm:mb-2">{t.serviceNeeded}</label>
               <select
+                name="service"
                 className="w-full px-3 sm:px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
                 value={formData.service}
                 onChange={(e) => setFormData({...formData, service: e.target.value as 'lockout' | 'jumpstart'})}
@@ -270,6 +288,7 @@ Description: ${formData.description}
               <label className="block text-sm font-medium text-gray-700 mb-1 sm:mb-2">{t.vehicleDetails}</label>
               <input
                 type="text"
+                name="vehicle-details"
                 placeholder={t.vehiclePlaceholder}
                 required
                 className="w-full px-3 sm:px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
@@ -281,6 +300,7 @@ Description: ${formData.description}
               <label className="block text-sm font-medium text-gray-700 mb-1 sm:mb-2">{t.location}</label>
               <input
                 type="text"
+                name="location"
                 required
                 className="w-full px-3 sm:px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
                 value={formData.location}
@@ -290,6 +310,7 @@ Description: ${formData.description}
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-700 mb-1 sm:mb-2">{t.description}</label>
               <textarea
+                name="description"
                 className="w-full px-3 sm:px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
                 rows={4}
                 value={formData.description}
