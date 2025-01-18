@@ -154,6 +154,8 @@ function App() {
         <title>24/7 Emergency Vehicle Services Des Moines | Lockout & Jump Start</title>
         <meta name="description" content="Professional 24/7 emergency vehicle services in Des Moines. Fast & reliable lockout assistance and jump start services. Call now for immediate help!" />
         <meta name="keywords" content="car lockout, jump start, emergency vehicle service, Des Moines, 24/7 service, vehicle locksmith" />
+        <link rel="icon" type="image/png" href="/logo.png" />
+        <link rel="apple-touch-icon" href="/logo.png" />
         
         {/* Open Graph tags for social sharing */}
         <meta property="og:title" content="24/7 Emergency Vehicle Services Des Moines" />
@@ -177,17 +179,41 @@ function App() {
       </div>
 
       {/* Hero Section */}
-      <header className="bg-gradient-to-r from-blue-600 to-blue-800 text-white">
+      <header className="bg-gradient-to-r from-blue-600 to-blue-800 text-white relative overflow-hidden">
         <div className="container mx-auto px-4 py-8 sm:py-16">
-          <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold mb-3 sm:mb-4">{t.title}</h1>
-          <p className="text-lg sm:text-xl mb-6 sm:mb-8">{t.subtitle}</p>
-          <div className="flex gap-4">
-            <a href="tel:+15153058807" className="w-full sm:w-auto flex items-center justify-center gap-2 bg-white text-blue-600 px-4 sm:px-6 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors text-sm sm:text-base">
-              <Phone size={18} className="sm:size-20" />
-              {t.callNow}
+          <div className="flex flex-col sm:flex-row items-center gap-6 sm:gap-8 mb-8">
+            <div className="relative">
+              <div className="absolute inset-0 bg-white/10 backdrop-blur-sm rounded-full"></div>
+              <img 
+                src="/logo.png" 
+                alt="Emergency Vehicle Services Logo" 
+                className="w-20 h-20 sm:w-24 sm:h-24 relative z-10 rounded-full p-1 shadow-xl"
+              />
+            </div>
+            <div className="text-center sm:text-left">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-100">
+                {t.title}
+              </h1>
+              <p className="text-lg sm:text-xl mt-2 text-blue-100 max-w-2xl">
+                {t.subtitle}
+              </p>
+            </div>
+          </div>
+          <div className="flex justify-center sm:justify-start gap-4">
+            <a 
+              href="tel:+15153058807" 
+              className="group flex items-center gap-3 bg-white/10 hover:bg-white/15 backdrop-blur-md px-6 py-3 rounded-full font-semibold transition-all duration-300 text-white border border-white/20 hover:border-white/30 shadow-lg"
+            >
+              <div className="w-10 h-10 flex items-center justify-center bg-white rounded-full">
+                <Phone size={20} className="text-blue-600" />
+              </div>
+              <span className="text-lg">{t.callNow}</span>
             </a>
           </div>
         </div>
+        {/* Add decorative elements */}
+        <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-blue-500/20 to-transparent"></div>
+        <div className="absolute bottom-0 left-0 w-1/2 h-1/2 bg-gradient-to-t from-blue-900/30 to-transparent"></div>
       </header>
 
       {/* Services Section */}
