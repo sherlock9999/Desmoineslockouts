@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Phone, Clock, Car, Key, Battery, MapPin, Mail, Send, Globe } from 'lucide-react';
 import { Helmet } from 'react-helmet';
 import toast, { Toaster } from 'react-hot-toast';
+import emailjs from '@emailjs/browser';
 
 interface ServiceRequest {
   name: string;
@@ -108,6 +109,8 @@ function App() {
     description: ''
   });
 
+  const formRef = useRef<HTMLFormElement>(null);
+
   const toggleLanguage = () => {
     setLanguage(language === 'en' ? 'es' : 'en');
   };
@@ -116,34 +119,30 @@ function App() {
     e.preventDefault();
     
     try {
-      const form = e.target as HTMLFormElement;
-      
-      // Encode form data properly for Netlify
-      const formData = new FormData(form);
-      fetch("/", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams(formData as any).toString(),
-      })
-        .then(() => {
-          toast.success(t.thankYou);
-          // Reset form
-          setFormData({
-            name: '',
-            phone: '',
-            service: 'lockout',
-            carDetails: '',
-            location: '',
-            description: ''
-          });
-          form.reset();
-        })
-        .catch((error) => {
-          console.error('Form submission error:', error);
-          toast.error('Error submitting form. Please try again.');
-        });
+      if (!formRef.current) return;
+
+      await emailjs.sendForm(
+        'service_g2hxmsv',
+        'template_2qrq94s',
+        formRef.current,
+        {
+          publicKey: 'tsG8gSk4szbNRJehH',
+        }
+      );
+
+      toast.success(t.thankYou);
+      // Reset form
+      setFormData({
+        name: '',
+        phone: '',
+        service: 'lockout',
+        carDetails: '',
+        location: '',
+        description: ''
+      });
+      formRef.current.reset();
     } catch (error) {
-      console.error('Form submission error:', error);
+      console.error('EmailJS Error:', error);
       toast.error('Error submitting form. Please try again.');
     }
   };
@@ -270,15 +269,10 @@ function App() {
       <section className="py-8 sm:py-16 container mx-auto px-4">
         <h2 className="text-2xl sm:text-3xl font-bold text-center mb-8 sm:mb-12">{t.requestService}</h2>
         <form 
+          ref={formRef}
           onSubmit={handleSubmit}
           className="max-w-2xl mx-auto bg-white p-4 sm:p-8 rounded-lg shadow-lg"
-          name="service-request"
-          method="POST"
-          data-netlify="true"
-          netlify-honeypot="bot-field"
         >
-          <input type="hidden" name="service-request-form" value="service-request" />
-          
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1 sm:mb-2">{t.name}</label>
@@ -305,7 +299,7 @@ function App() {
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1 sm:mb-2">{t.serviceNeeded}</label>
               <select
-                name="service"
+                name="serviceNeeded"
                 className="w-full px-3 sm:px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
                 value={formData.service}
                 onChange={(e) => setFormData({...formData, service: e.target.value as 'lockout' | 'jumpstart'})}
@@ -318,7 +312,7 @@ function App() {
               <label className="block text-sm font-medium text-gray-700 mb-1 sm:mb-2">{t.vehicleDetails}</label>
               <input
                 type="text"
-                name="vehicle-details"
+                name="vehicleDetails"
                 placeholder={t.vehiclePlaceholder}
                 required
                 className="w-full px-3 sm:px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 text-sm sm:text-base"
