@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Phone, Clock, Car, Key, Battery, MapPin, Mail, Send, Globe } from 'lucide-react';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import toast, { Toaster } from 'react-hot-toast';
 import emailjs from '@emailjs/browser';
 
@@ -99,7 +99,6 @@ const translations = {
 function App() {
   const [language, setLanguage] = useState<'en' | 'es'>('en');
   const t = translations[language];
-
   const [formData, setFormData] = useState<ServiceRequest>({
     name: '',
     phone: '',
@@ -110,6 +109,32 @@ function App() {
   });
 
   const formRef = useRef<HTMLFormElement>(null);
+  const businessSchema = {
+    "@context": "https://schema.org",
+    "@type": "EmergencyService",
+    "name": "Des Moines Emergency Vehicle Services",
+    "description": "Professional 24/7 emergency vehicle services in Des Moines. Fast & reliable lockout assistance and jump start services.",
+    "url": "https://desmoineslockouts.com",
+    "telephone": "+15153058807",
+    "areaServed": "Des Moines, Iowa",
+    "availableLanguage": ["English", "Spanish"],
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Saturday", "Sunday"],
+        "opens": "00:00",
+        "closes": "23:59"
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        "opens": "17:00",
+        "closes": "07:00"
+      }
+    ],
+    "priceRange": "$$",
+    "serviceType": ["Vehicle Lockout Service", "Jump Start Service"]
+  };
 
   const toggleLanguage = () => {
     setLanguage(language === 'en' ? 'es' : 'en');
@@ -153,7 +178,7 @@ function App() {
       <Helmet>
         <title>24/7 Emergency Vehicle Services Des Moines | Lockout & Jump Start</title>
         <meta name="description" content="Professional 24/7 emergency vehicle services in Des Moines. Fast & reliable lockout assistance and jump start services. Call now for immediate help!" />
-        <meta name="keywords" content="car lockout, jump start, emergency vehicle service, Des Moines, 24/7 service, vehicle locksmith" />
+        <meta name="keywords" content="car lockout, jump start, emergency vehicle service, Des Moines, 24/7 service, vehicle locksmith, auto locksmith, car battery service" />
         <link rel="icon" type="image/png" href="/logo.png" />
         <link rel="apple-touch-icon" href="/logo.png" />
         
@@ -162,9 +187,28 @@ function App() {
         <meta property="og:description" content="Professional 24/7 emergency vehicle services in Des Moines. Fast & reliable lockout assistance and jump start services." />
         <meta property="og:type" content="website" />
         <meta property="og:locale" content={language === 'en' ? 'en_US' : 'es_ES'} />
+        <meta property="og:image" content="/logo.png" />
+        <meta property="og:url" content="https://desmoineslockouts.com" />
+        
+        {/* Twitter Card tags */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="24/7 Emergency Vehicle Services Des Moines" />
+        <meta name="twitter:description" content="Professional 24/7 emergency vehicle services in Des Moines. Fast & reliable lockout assistance and jump start services." />
+        <meta name="twitter:image" content="/logo.png" />
+        
+        {/* Additional SEO meta tags */}
+        <meta name="robots" content="index, follow" />
+        <meta name="author" content="Des Moines Emergency Vehicle Services" />
+        <meta name="geo.region" content="US-IA" />
+        <meta name="geo.placename" content="Des Moines" />
         
         {/* Canonical URL */}
         <link rel="canonical" href="https://desmoineslockouts.com" />
+        
+        {/* Structured Data */}
+        <script type="application/ld+json">
+          {JSON.stringify(businessSchema)}
+        </script>
       </Helmet>
 
       {/* Language Toggle */}
