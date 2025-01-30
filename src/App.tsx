@@ -16,7 +16,7 @@ interface ServiceRequest {
 const translations = {
   en: {
     title: "24/7 Emergency Vehicle Services",
-    subtitle: "Fast & Reliable Lockout Assistance & Jump Start Services in Des Moines",
+    subtitle: "Fast & Reliable Vehicle Assistance in Greater Des Moines Area",
     callNow: "Call Now",
     services: "Our Services",
     lockoutService: "Vehicle Lockout Service",
@@ -56,7 +56,7 @@ const translations = {
   },
   es: {
     title: "Servicios de Emergencia para Vehículos 24/7",
-    subtitle: "Servicio Rápido y Confiable de Cerrajería y Arranque de Batería en Des Moines",
+    subtitle: "Asistencia Vehicular Rápida y Confiable en el Área de Des Moines",
     callNow: "Llamar Ahora",
     services: "Nuestros Servicios",
     lockoutService: "Servicio de Cerrajería",
