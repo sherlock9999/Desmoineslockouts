@@ -16,7 +16,7 @@ interface ServiceRequest {
 const translations = {
   en: {
     title: "24/7 Emergency Vehicle Services",
-    subtitle: "Fast & Reliable Vehicle Assistance in Greater Des Moines Area",
+    subtitle: "Fast & Reliable Lockout Assistance & Jump Start Services in Greater Des Moines Area",
     callNow: "Call Now",
     services: "Our Services",
     lockoutService: "Vehicle Lockout Service",
@@ -37,26 +37,16 @@ const translations = {
     location: "Location",
     description: "Description of Issue",
     submit: "Submit Request",
-    footer: "© 2024 Emergency Vehicle Services. Serving Des Moines 24/7 for your assistance.",
+    footer: "© 2025 Emergency Vehicle Services. Serving Greater Des Moines Area 24/7 for your assistance.",
     days: {
-      monFri: "Monday - Friday",
-      sat: "Saturday",
-      sun: "Sunday",
-      overnight: "Overnight Service",
-      evening: "Evening Service"
+      monSun: "Monday - Sunday"
     },
-    hours: {
-      weekday: {
-        overnight: "12:00 AM - 7:00 AM",
-        evening: "5:00 PM - 12:00 AM"
-      },
-      weekend: "24 Hours"
-    },
+    hours: "24 Hours",
     thankYou: "Thank you! We will contact you shortly."
   },
   es: {
     title: "Servicios de Emergencia para Vehículos 24/7",
-    subtitle: "Asistencia Vehicular Rápida y Confiable en el Área de Des Moines",
+    subtitle: "Servicio Rápido y Confiable de Cerrajería y Arranque de Batería en el Área Metropolitana de Des Moines",
     callNow: "Llamar Ahora",
     services: "Nuestros Servicios",
     lockoutService: "Servicio de Cerrajería",
@@ -65,7 +55,7 @@ const translations = {
     jumpDesc: "¿Batería descargada? Vamos a tu ubicación y arrancamos tu vehículo de manera rápida y segura.",
     hoursTitle: "Horario de Atención",
     contact: "Información de Contacto",
-    serving: "Sirviendo el Área de Des Moines",
+    serving: "Sirviendo el Área Metropolitana de Des Moines",
     requestService: "Solicitar Servicio",
     name: "Nombre",
     phone: "Teléfono",
@@ -77,21 +67,11 @@ const translations = {
     location: "Ubicación",
     description: "Descripción del Problema",
     submit: "Enviar Solicitud",
-    footer: "© 2024 Servicios de Emergencia para Vehículos. Sirviendo Des Moines 24/7 para su asistencia.",
+    footer: "© 2025 Servicios de Emergencia para Vehículos. Sirviendo el Área Metropolitana de Des Moines 24/7 para su asistencia.",
     days: {
-      monFri: "Lunes - Viernes",
-      sat: "Sábado",
-      sun: "Domingo",
-      overnight: "Servicio Nocturno",
-      evening: "Servicio Vespertino"
+      monSun: "Lunes - Domingo"
     },
-    hours: {
-      weekday: {
-        overnight: "12:00 AM - 7:00 AM",
-        evening: "5:00 PM - 12:00 AM"
-      },
-      weekend: "24 Horas"
-    },
+    hours: "24 Horas",
     thankYou: "¡Gracias! Nos pondremos en contacto pronto."
   }
 };
@@ -121,15 +101,9 @@ function App() {
     "openingHoursSpecification": [
       {
         "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Saturday", "Sunday"],
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
         "opens": "00:00",
         "closes": "23:59"
-      },
-      {
-        "@type": "OpeningHoursSpecification",
-        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-        "opens": "17:00",
-        "closes": "07:00"
       }
     ],
     "priceRange": "$$",
@@ -156,7 +130,6 @@ function App() {
       );
 
       toast.success(t.thankYou);
-      // Reset form
       setFormData({
         name: '',
         phone: '',
@@ -182,7 +155,6 @@ function App() {
         <link rel="icon" type="image/png" href="/logo.png" />
         <link rel="apple-touch-icon" href="/logo.png" />
         
-        {/* Open Graph tags for social sharing */}
         <meta property="og:title" content="24/7 Emergency Vehicle Services Des Moines" />
         <meta property="og:description" content="Professional 24/7 emergency vehicle services in Des Moines. Fast & reliable lockout assistance and jump start services." />
         <meta property="og:type" content="website" />
@@ -190,28 +162,23 @@ function App() {
         <meta property="og:image" content="/logo.png" />
         <meta property="og:url" content="https://desmoineslockouts.com" />
         
-        {/* Twitter Card tags */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="24/7 Emergency Vehicle Services Des Moines" />
         <meta name="twitter:description" content="Professional 24/7 emergency vehicle services in Des Moines. Fast & reliable lockout assistance and jump start services." />
         <meta name="twitter:image" content="/logo.png" />
         
-        {/* Additional SEO meta tags */}
         <meta name="robots" content="index, follow" />
         <meta name="author" content="Des Moines Emergency Vehicle Services" />
         <meta name="geo.region" content="US-IA" />
         <meta name="geo.placename" content="Des Moines" />
         
-        {/* Canonical URL */}
         <link rel="canonical" href="https://desmoineslockouts.com" />
         
-        {/* Structured Data */}
         <script type="application/ld+json">
           {JSON.stringify(businessSchema)}
         </script>
       </Helmet>
 
-      {/* Language Toggle */}
       <div className="fixed top-2 right-2 z-50 sm:top-4 sm:right-4">
         <button
           onClick={toggleLanguage}
@@ -222,7 +189,6 @@ function App() {
         </button>
       </div>
 
-      {/* Hero Section */}
       <header className="bg-gradient-to-r from-blue-600 to-blue-800 text-white relative overflow-hidden">
         <div className="container mx-auto px-4 py-8 sm:py-16">
           <div className="flex flex-col sm:flex-row items-center gap-6 sm:gap-8 mb-8">
@@ -235,10 +201,10 @@ function App() {
               />
             </div>
             <div className="text-center sm:text-left">
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-100">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-100 mb-3">
                 {t.title}
               </h1>
-              <p className="text-lg sm:text-xl mt-2 text-blue-100 max-w-2xl">
+              <p className="text-lg sm:text-xl text-blue-100 max-w-2xl">
                 {t.subtitle}
               </p>
             </div>
@@ -257,7 +223,6 @@ function App() {
         </div>
       </header>
 
-      {/* Services Section */}
       <section className="py-8 sm:py-16 container mx-auto px-4">
         <h2 className="text-2xl sm:text-3xl font-bold text-center mb-8 sm:mb-12">{t.services}</h2>
         <div className="grid md:grid-cols-2 gap-4 sm:gap-8">
@@ -274,7 +239,6 @@ function App() {
         </div>
       </section>
 
-      {/* Hours & Contact */}
       <section className="bg-gray-100 py-8 sm:py-16">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-4 sm:gap-8">
@@ -284,26 +248,11 @@ function App() {
                 {t.hoursTitle}
               </h3>
               <div className="space-y-4">
-                <div className="border-b pb-4">
-                  <h4 className="font-medium text-gray-900 mb-2">{t.days.monFri}</h4>
-                  <div className="space-y-1 text-sm sm:text-base text-gray-600">
-                    <div className="flex items-center gap-2">
-                      <Clock size={16} className="text-blue-600" />
-                      <span className="font-medium">{t.days.overnight}:</span>
-                      <span>{t.hours.weekday.overnight}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Clock size={16} className="text-blue-600" />
-                      <span className="font-medium">{t.days.evening}:</span>
-                      <span>{t.hours.weekday.evening}</span>
-                    </div>
-                  </div>
-                </div>
                 <div>
-                  <h4 className="font-medium text-gray-900 mb-2">{t.days.sat} & {t.days.sun}</h4>
+                  <h4 className="font-medium text-gray-900 mb-2">{t.days.monSun}</h4>
                   <div className="flex items-center gap-2 text-sm sm:text-base text-gray-600">
                     <Clock size={16} className="text-blue-600" />
-                    <span>{t.hours.weekend}</span>
+                    <span>{t.hours}</span>
                   </div>
                 </div>
               </div>
@@ -332,7 +281,6 @@ function App() {
         </div>
       </section>
 
-      {/* Service Request Form */}
       <section className="py-8 sm:py-16 container mx-auto px-4">
         <h2 className="text-2xl sm:text-3xl font-bold text-center mb-8 sm:mb-12">{t.requestService}</h2>
         <form 
@@ -419,7 +367,6 @@ function App() {
         </form>
       </section>
 
-      {/* Footer */}
       <footer className="bg-gray-800 text-white py-6 sm:py-8">
         <div className="container mx-auto px-4 text-center text-sm sm:text-base">
           <p>{t.footer}</p>
