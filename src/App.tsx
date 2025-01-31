@@ -88,6 +88,15 @@ function App() {
     description: ''
   });
 
+  const handleCallNowClick = () => {
+    // Track the call now button click
+    window.gtag('event', 'conversion_event_contact_1', {
+      event_category: 'Contact',
+      event_label: 'Call Now Button Click',
+      value: 1
+    });
+  };
+
   const formRef = useRef<HTMLFormElement>(null);
   const businessSchema = {
     "@context": "https://schema.org",
@@ -211,7 +220,8 @@ function App() {
           </div>
           <div className="flex justify-center sm:justify-start gap-4">
             <a 
-              href="tel:+15153058807" 
+              href="tel:+15153058807"
+              onClick={handleCallNowClick}
               className="group flex items-center gap-3 bg-white/10 hover:bg-white/15 backdrop-blur-md px-6 py-3 rounded-full font-semibold transition-all duration-300 text-white border border-white/20 hover:border-white/30 shadow-lg"
             >
               <div className="w-10 h-10 flex items-center justify-center bg-white rounded-full">
