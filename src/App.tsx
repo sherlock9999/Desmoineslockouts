@@ -4,6 +4,13 @@ import { Helmet } from 'react-helmet-async';
 import toast, { Toaster } from 'react-hot-toast';
 import emailjs from '@emailjs/browser';
 
+// Helper function to delay opening a URL until a gtag event is sent
+declare global {
+  interface Window {
+    gtagSendEvent: (url: string) => boolean;
+  }
+}
+
 interface ServiceRequest {
   name: string;
   phone: string;
@@ -88,13 +95,9 @@ function App() {
     description: ''
   });
 
-  const handleCallNowClick = () => {
-    // Track the call now button click
-    window.gtag('event', 'conversion_event_contact_1', {
-      event_category: 'Contact',
-      event_label: 'Call Now Button Click',
-      value: 1
-    });
+  const handleCallNowClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    window.gtagSendEvent('tel:+15153058807');
   };
 
   const formRef = useRef<HTMLFormElement>(null);
@@ -185,6 +188,23 @@ function App() {
         
         <script type="application/ld+json">
           {JSON.stringify(businessSchema)}
+        </script>
+        <script>
+          {`
+            // Helper function to delay opening a URL until a gtag event is sent
+            window.gtagSendEvent = function(url) {
+              var callback = function () {
+                if (typeof url === 'string') {
+                  window.location = url;
+                }
+              };
+              gtag('event', 'conversion_event_contact_1', {
+                'event_callback': callback,
+                'event_timeout': 2000
+              });
+              return false;
+            }
+          `}
         </script>
       </Helmet>
 
