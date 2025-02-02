@@ -198,7 +198,7 @@ function App() {
                   window.location = url;
                 }
               };
-              gtag('event', 'conversion_event_contact_1', {
+              gtag('event', 'conversion_event_contact_2', {
                 'event_callback': callback,
                 'event_timeout': 2000
               });
